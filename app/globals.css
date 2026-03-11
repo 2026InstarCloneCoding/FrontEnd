@@ -1,0 +1,19 @@
+/* Tailwind v4 기본 설정 불러오기 */
+@import "tailwindcss";
+
+/* tailwind 버전 4부터 기존 tailwind.config.ts을 globals.css에서 함. */
+@theme {
+  --color-ig-primary: #0095f6;
+  --color-ig-secondary: #e0f1ff;
+  --color-ig-border: #dbdbdb;
+  --color-ig-text: #262626;
+  --color-ig-gray: #8e8e8e;
+  --color-ig-error: #ed4956;
+  --color-ig-bg: #fafafa;
+}
+
+/* 기본 바디 스타일 지정 */
+body {
+  background-color: var(--color-ig-bg);
+  color: var(--color-ig-text);
+}

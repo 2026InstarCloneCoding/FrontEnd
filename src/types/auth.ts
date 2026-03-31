@@ -12,10 +12,3 @@ export interface LoginResponse {
     profileImageUrl: string | null;
   };
 }
-
-export interface SignupRequest {
-  username: string;
-  email: string;
-  password: string;
-  fullName: string;
-}

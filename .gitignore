@@ -1,21 +1,36 @@
-# dependencies
-/node_modules
+# ─── 의존성 ────────────────────────────────────────────────
+node_modules/
+**/node_modules/
 
-# build output
-/dist
+# ─── 빌드 결과물 ────────────────────────────────────────────
+dist/
+build/
+**/dist/
 
-# env files
-.env*
-!.env.example
+# ─── 환경 변수 ──────────────────────────────────────────────
+.env
+.env.local
+.env.*.local
+**/.env.local
+**/.env.*.local
 
-# misc
-.DS_Store
-*.pem
-
-# debug
-npm-debug.log*
-pnpm-debug.log*
-
-# editor
+# ─── 에디터 ────────────────────────────────────────────────
 .vscode/
 .idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+
+# ─── OS ─────────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+
+# ─── 로그 ───────────────────────────────────────────────────
+npm-debug.log*
+pnpm-debug.log*
+yarn-debug.log*
+
+# ─── 기타 ───────────────────────────────────────────────────
+*.pem
+.pnpm-store/

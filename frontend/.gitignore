@@ -1,21 +1,25 @@
-# dependencies
-/node_modules
+# 의존성
+node_modules/
 
-# build output
-/dist
+# 빌드 결과물
+dist/
+dist-ssr/
 
-# env files
-.env*
+# 환경 변수
+.env
+.env.local
+.env.*.local
 !.env.example
 
-# misc
+# 기타
+*.local
 .DS_Store
 *.pem
 
-# debug
+# 로그
 npm-debug.log*
 pnpm-debug.log*
 
-# editor
+# 에디터
 .vscode/
 .idea/

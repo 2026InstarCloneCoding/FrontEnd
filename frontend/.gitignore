@@ -6,9 +6,20 @@ dist/
 dist-ssr/
 
 # 환경 변수
+.env
 .env.local
 .env.*.local
+!.env.example
 
 # 기타
 *.local
 .DS_Store
+*.pem
+
+# 로그
+npm-debug.log*
+pnpm-debug.log*
+
+# 에디터
+.vscode/
+.idea/

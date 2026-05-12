@@ -74,18 +74,18 @@ function FloatingInput({
 
 // ── 로그인 폼 ─────────────────────────────────────────────
 export default function LoginForm() {
-  const [username, onChangeUsername] = useInput("");
+  const [email, onChangeEmail] = useInput("");
   const [password, onChangePassword] = useInput("");
   const [showPassword, setShowPassword] = useState(false);
 
   const { mutate: login, isLoading, error } = useLogin();
 
-  const isActive = username.trim().length > 0 && password.trim().length > 0;
+  const isActive = email.trim().length > 0 && password.trim().length > 0;
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!isActive || isLoading) return;
-    login({ username, password });
+    login({ email, password });
   };
 
   return (
@@ -112,12 +112,12 @@ export default function LoginForm() {
       <form onSubmit={handleSubmit} className="w-full flex flex-col gap-4">
 
         <FloatingInput
-          id="username"
-          type="text"
-          value={username}
-          onChange={onChangeUsername}
-          label="휴대폰 번호, 사용자 이름 또는 이메일 주소"
-          autoComplete="username"
+          id="email"
+          type="email"
+          value={email}
+          onChange={onChangeEmail}
+          label="이메일 주소"
+          autoComplete="email"
         />
 
         <FloatingInput

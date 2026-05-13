@@ -3,74 +3,9 @@ import { Link } from "react-router-dom";
 import { useLogin } from "@/hooks/useLogin";
 import { useInput } from "@/hooks/useInput";
 import { cn } from "@/utils/cn";
-
-// ── 플로팅 라벨 인풋 ──────────────────────────────────────
-interface FloatingInputProps {
-  id: string;
-  type?: string;
-  value: string;
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  label: string;
-  autoComplete?: string;
-  rightSlot?: React.ReactNode;
-}
-
-function FloatingInput({
-  id,
-  type = "text",
-  value,
-  onChange,
-  label,
-  autoComplete,
-  rightSlot,
-}: FloatingInputProps) {
-  const [isFocused, setIsFocused] = useState(false);
-  const isFloating = isFocused || value.length > 0;
-
-  return (
-    <div
-      className={cn(
-        "relative w-full h-14 border rounded-2xl bg-white transition-colors duration-150",
-        isFocused ? "border-gray-400" : "border-gray-300"
-      )}
-    >
-      {/* 플로팅 라벨 — 포커스/값 입력 시 위로 이동 */}
-      <label
-        htmlFor={id}
-        className={cn(
-          "absolute left-4 pointer-events-none text-gray-400 transition-all duration-200 z-10",
-          isFloating
-            ? "top-2.5 text-[12px]" // 떠오를 때 텍스트 위치 및 크기 조정
-            : "top-1/2 -translate-y-1/2 text-[15px]" // 기본 상태일 때 텍스트 크기 증가
-        )}
-      >
-        {label}
-      </label>
-
-      <input
-        id={id}
-        type={type}
-        value={value}
-        onChange={onChange}
-        onFocus={() => setIsFocused(true)}
-        onBlur={() => setIsFocused(false)}
-        autoComplete={autoComplete}
-        className={cn(
-          "absolute inset-0 w-full h-full bg-transparent rounded-2xl px-4 text-[15px] text-[#262626] z-0",
-          "focus:outline-none",
-          rightSlot ? "pr-20" : "pr-4",
-          isFloating ? "pt-2.5" : "pt-0" // 라벨이 떠오르면 텍스트가 겹치지 않게 아래로 밀어줌
-        )}
-      />
-
-      {rightSlot && (
-        <div className="absolute right-4 top-1/2 -translate-y-1/2 z-20">
-          {rightSlot}
-        </div>
-      )}
-    </div>
-  );
-}
+// FloatingInput을 공통 컴포넌트 폴더에서 가져옴
+// SignupForm에서도 동일한 컴포넌트를 재사용하기 위해 분리
+import { FloatingInput } from "@/components/common/FloatingInput";
 
 // ── 로그인 폼 ─────────────────────────────────────────────
 export default function LoginForm() {
@@ -80,8 +15,8 @@ export default function LoginForm() {
 
   const { mutate: login, isLoading, error } = useLogin();
 
+  // 로그인 버튼 활성화 조건: 이메일과 비밀번호가 모두 입력되어야 함
   const isActive = email.trim().length > 0 && password.trim().length > 0;
-
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!isActive || isLoading) return;
@@ -144,6 +79,7 @@ export default function LoginForm() {
         <button
           type="submit"
           disabled={!isActive || isLoading}
+          // cn 유틸로 조건부 클래스 적용: 활성화 상태에 따라 배경색과 커서 변경
           className={cn(
             "w-full mt-2 h-14 rounded-2xl flex items-center justify-center",
             "text-white text-[16px] font-semibold transition-opacity duration-150",
@@ -188,9 +124,9 @@ export default function LoginForm() {
       {/* 구분 여백 */}
       <div className="h-3" />
 
-      {/* 새 계정 만들기 */}
-      <button
-        type="button"
+      {/* 새 계정 만들기 → 회원가입 페이지로 이동 */}
+      <Link
+        to="/signup"
         className={cn(
           "w-full mt-4 flex items-center justify-center h-14",
           "rounded-2xl border border-[#0095f6]",
@@ -199,11 +135,7 @@ export default function LoginForm() {
         )}
       >
         새 계정 만들기
-      </button>
-
-      {/* Meta 로고 */}
-      <div className="mt-12 flex items-center gap-1.5">
-      </div>
+      </Link>
 
     </div>
   );

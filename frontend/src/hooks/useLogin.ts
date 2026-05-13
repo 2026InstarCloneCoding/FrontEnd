@@ -11,12 +11,15 @@ import type { LoginRequest } from "@/types/auth";
  * - 실패 → error 상태로 UI에서 처리
  */
 export function useLogin() {
+  // React Router의 navigate 함수 : 페이지 이동을 담당
   const navigate = useNavigate();
+  // AuthContext에서 제공하는 login 함수 : 로그인 성공 시 사용자 정보와 토큰을 저장
   const { login } = useAuth();
 
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
+  // mutate 함수 : 로그인 요청을 보내고 결과에 따라 상태를 업데이트
   const mutate = async (data: LoginRequest) => {
     setIsLoading(true);
     setError(null);

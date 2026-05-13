@@ -1,3 +1,6 @@
+// ── API 클라이언트 설정 ───────────────────────────────────────────────
+// reference types="vite/client" : Vite의 타입 정의 참조 (import.meta.env 등 사용 위해)
+/// <reference types="vite/client" />
 import axios from "axios";
 
 // 개발: 빈 문자열 → Vite 프록시(/api → http://localhost:8080)가 처리
@@ -10,9 +13,12 @@ function snakeToCamel(str: string): string {
   return str.replace(/_([a-z])/g, (_, c: string) => c.toUpperCase());
 }
 
+// 재귀적으로 객체/배열 탐색하며 키 변환
+// 이유 : 백엔드 응답이 중첩된 구조일 수 있기 때문 (예: { data: { access_token, refresh_token } })
 function transformKeys(data: unknown): unknown {
   if (Array.isArray(data)) return data.map(transformKeys);
   if (data !== null && typeof data === "object") {
+    // Object.entries로 객체의 [key, value] 쌍을 배열로 변환 → map으로 키 변환 → Object.fromEntries로 다시 객체로 변환
     return Object.fromEntries(
       Object.entries(data as Record<string, unknown>).map(([k, v]) => [
         snakeToCamel(k),
@@ -35,6 +41,8 @@ export const setAccessToken = (token: string | null) => {
 };
 
 // ── 인증 불필요 클라이언트 (로그인, 회원가입, 토큰 재발급) ──
+// 일반적인 API 호출에 사용되는 클라이언트 : 로그인/회원가입/토큰 재발급 등 인증이 필요 없는 엔드포인트에 사용
+// 이유: 로그인 API는 토큰이 없으므로 authApiClient 대신 apiClient 사용
 export const apiClient = axios.create({
   baseURL: BASE_URL,
   withCredentials: true,
